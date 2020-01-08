@@ -2616,6 +2616,8 @@ window.__require = function e(t, n, o) {
                 havedSprite: cc.SpriteFrame
             },
             onLoad: function() {
+				this.autoAdapteScreen();
+				
                 for (var e = 0; e < this.waterLayer.children[0].children.length; e++)
                     this.waterLayer.children[0].children[e].addComponent("shopItem").init(e, 1, this.usingSprite, this.havedSprite);
                 for (var t = 0; t < this.glassLayer.children[0].children.length; t++)
@@ -2623,6 +2625,27 @@ window.__require = function e(t, n, o) {
                 for (var n = 0; n < this.penLayer.children[0].children.length; n++)
                     this.penLayer.children[0].children[n].addComponent("shopItem").init(n, 3, this.usingSprite, this.havedSprite)
             },
+			autoAdapteScreen:function(){
+				// 适配解决方案
+				let _canvas = cc.Canvas.instance;
+			// 设计分辨率比
+				let _rateR = _canvas.designResolution.height/_canvas.designResolution.width;
+			// 显示分辨率比
+				let _rateV = cc.winSize.height/cc.winSize.width;
+				console.log("winSize: rateR: "+_rateR+" rateV: "+_rateV);
+				if (_rateV > _rateR)
+				{
+					_canvas.fitHeight = false;
+					_canvas.fitWidth = true;
+					console.log("winSize: fitWidth");
+				}
+				else
+				{
+					_canvas.fitHeight = true;
+					_canvas.fitWidth = false;
+					console.log("winSize: fitHeight");
+				}
+			},
             waterBtnEvent: function() {
                 this.waterLayer.active = !0,
                 this.glassLayer.active = !1,
